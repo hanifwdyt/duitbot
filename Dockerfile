@@ -14,4 +14,4 @@ COPY . .
 RUN npm run build
 
 # Start script - ensure data dir exists before prisma
-CMD ["sh", "-c", "mkdir -p /app/data && npx prisma db push --skip-generate 2>&1 && echo 'DB ready' && node dist/index.js"]
+CMD ["sh", "-c", "mkdir -p /app/data && npx prisma db push --skip-generate --accept-data-loss 2>&1 && echo 'DB ready' && node dist/index.js"]
