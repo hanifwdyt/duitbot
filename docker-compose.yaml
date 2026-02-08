@@ -1,0 +1,17 @@
+services:
+  aturuang:
+    build: .
+    ports:
+      - "${WEB_PORT:-3000}:3000"
+    volumes:
+      - aturuang-data:/app/data
+    environment:
+      - DATABASE_URL=file:/app/data/aturuang.db
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - WEB_PORT=${WEB_PORT:-3000}
+      - WEB_URL=${WEB_URL}
+    restart: unless-stopped
+
+volumes:
+  aturuang-data:

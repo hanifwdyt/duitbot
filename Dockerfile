@@ -15,6 +15,7 @@ RUN npm run build
 
 # Create data directory
 RUN mkdir -p /app/data
+VOLUME ["/app/data"]
 
 # Start script
 CMD ["sh", "-c", "npx prisma db push --skip-generate && node dist/index.js"]
