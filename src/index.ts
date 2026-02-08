@@ -25,7 +25,7 @@ async function main() {
     console.error("Bot error:", err);
   });
 
-  console.log("🤖 Starting DuitBot...");
+  console.log("🤖 Starting AturUang...");
   await bot.start({
     onStart: (botInfo) => {
       console.log(`✅ Bot @${botInfo.username} is running!`);

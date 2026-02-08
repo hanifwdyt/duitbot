@@ -100,19 +100,19 @@ const LOGIN_HTML = `<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>DuitBot</title>
+  <title>AturUang</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
       --bg: #0a0a0b; --bg2: #141416; --bg3: #1c1c1f;
       --text: #fafafa; --text2: #a1a1aa; --text3: #71717a;
-      --accent: #10b981; --accent2: #059669;
+      --accent: #F59E0B; --accent2: #D97706;
       --border: #27272a; --error: #ef4444;
     }
     body {
-      font-family: 'Inter', -apple-system, sans-serif;
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100dvh;
@@ -216,8 +216,8 @@ const LOGIN_HTML = `<!DOCTYPE html>
 <body>
   <div class="login-card">
     <div class="logo">💰</div>
-    <h1>DuitBot</h1>
-    <p class="subtitle">Expense tracker via Telegram</p>
+    <h1>AturUang</h1>
+    <p class="subtitle">SatuRuang untuk atur keuanganmu</p>
 
     <div class="error" id="error"></div>
 
@@ -286,16 +286,16 @@ const DASHBOARD_HTML = `<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>DuitBot Dashboard</title>
+  <title>AturUang</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
       --bg: #0a0a0b; --bg2: #141416; --bg3: #1c1c1f;
       --text: #fafafa; --text2: #a1a1aa; --text3: #71717a;
-      --accent: #10b981; --accent2: #059669; --accent-bg: rgba(16, 185, 129, 0.1);
+      --accent: #F59E0B; --accent2: #D97706; --accent-bg: rgba(245, 158, 11, 0.1);
       --border: #27272a;
       --cat-food: #f97316; --cat-coffee: #a78bfa; --cat-transport: #3b82f6;
       --cat-shopping: #ec4899; --cat-entertainment: #8b5cf6; --cat-bills: #6b7280;
@@ -307,7 +307,7 @@ const DASHBOARD_HTML = `<!DOCTYPE html>
       --border: #e4e4e7;
     }
     body {
-      font-family: 'Inter', -apple-system, sans-serif;
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100dvh;
@@ -617,7 +617,7 @@ const DASHBOARD_HTML = `<!DOCTYPE html>
 </head>
 <body>
   <header class="header">
-    <h1>💰 DuitBot</h1>
+    <h1>💰 AturUang</h1>
     <div class="header-actions">
       <button class="icon-btn" id="themeToggle" title="Toggle theme">🌙</button>
       <button class="icon-btn" id="logoutBtn" title="Logout">🚪</button>
