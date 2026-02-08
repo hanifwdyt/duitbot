@@ -1,0 +1,39 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  tgId      String   @unique
+  password  String?
+  name      String?
+  theme     String   @default("dark")
+  createdAt DateTime @default(now())
+
+  @@map("users")
+}
+
+model Expense {
+  id         String   @id @default(cuid())
+  amount     Int
+  item       String
+  category   String
+  place      String?
+  withPerson String?
+  mood       String?
+  story      String?
+  rawMessage String
+  tgId       String
+  date       DateTime
+  createdAt  DateTime @default(now())
+
+  @@index([tgId])
+  @@index([date])
+  @@index([category])
+}
