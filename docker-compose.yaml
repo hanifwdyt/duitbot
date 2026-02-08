@@ -1,0 +1,29 @@
+services:
+  aturuang:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=file:./data/duit.db
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - WEB_PORT=3000
+      - WEB_URL=https://aturuang.hanif.app
+    volumes:
+      - type: bind
+        source: /data/aturuang
+        target: /app/data
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.aturuang.rule=Host(`aturuang.hanif.app`)"
+      - "traefik.http.routers.aturuang.entrypoints=https"
+      - "traefik.http.routers.aturuang.tls=true"
+      - "traefik.http.routers.aturuang.tls.certresolver=letsencrypt"
+      - "traefik.http.services.aturuang.loadbalancer.server.port=3000"
+    networks:
+      - coolify
+
+networks:
+  coolify:
+    external: true
