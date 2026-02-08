@@ -1,0 +1,17 @@
+services:
+  aturuang:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=file:./data/duit.db
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - WEB_PORT=3000
+      - WEB_URL=https://aturuang.hanif.app
+    volumes:
+      - aturuang-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  aturuang-data:
