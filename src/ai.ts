@@ -119,7 +119,13 @@ ${message}`,
       return { expenses: [], error: "No response from AI" };
     }
 
-    const parsed = JSON.parse(content) as ParseResult;
+    // Extract JSON from response (Claude 4.5 sometimes wraps in markdown code blocks)
+    const jsonMatch = content.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) {
+      return { expenses: [], error: "No JSON in response" };
+    }
+
+    const parsed = JSON.parse(jsonMatch[0]) as ParseResult;
     return parsed;
   } catch (error) {
     console.error("AI parsing error:", error);
@@ -178,6 +184,23 @@ PENTING:
 - Harga harus dalam Rupiah (tanpa Rp, tanpa titik)
 - Jika ada ongkir/fee, masukkan sebagai item terpisah dengan category "transport"
 - Jika struk tidak jelas/buram, tetap coba extract yang terbaca`;
+
+export async function getCredits(): Promise<{ total_credits: number; total_usage: number; remaining: number } | null> {
+  try {
+    const res = await fetch("https://openrouter.ai/api/v1/credits", {
+      headers: { Authorization: `Bearer ${process.env.OPENROUTER_MGMT_KEY}` },
+    });
+    if (!res.ok) return null;
+    const { data } = await res.json();
+    return {
+      total_credits: data.total_credits,
+      total_usage: data.total_usage,
+      remaining: data.total_credits - data.total_usage,
+    };
+  } catch {
+    return null;
+  }
+}
 
 export async function parseReceipt(
   imageBase64: string,

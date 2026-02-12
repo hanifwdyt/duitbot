@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { PrismaClient } from "@prisma/client";
+import { getCredits } from "./ai.js";
 import {
   format,
   startOfDay,
@@ -111,6 +112,13 @@ export function createWeb() {
   // Admin User Detail page
   app.get("/admin/user/:tgId", (c) => {
     return c.html(ADMIN_DETAIL_HTML);
+  });
+
+  // API: Admin Credits
+  app.get("/api/admin/credits", async (c) => {
+    const credits = await getCredits();
+    if (!credits) return c.json({ error: "Failed to fetch credits" }, 500);
+    return c.json(credits);
   });
 
   // API: Admin Auth
@@ -1035,7 +1043,7 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
     .search-bar:focus { border-color: var(--accent); }
     .search-bar::placeholder { color: var(--text3); }
     .stats-row {
-      display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px;
     }
     .stat-card {
       background: var(--bg2); border: 1px solid var(--border); border-radius: 16px;
@@ -1093,6 +1101,10 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
       <div class="stat-card">
         <div class="stat-label">Total Expenses</div>
         <div class="stat-value" id="totalExpenses">-</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">AI Credits</div>
+        <div class="stat-value" id="aiCredits">-</div>
       </div>
     </div>
     <input type="text" class="search-bar" id="searchBar" placeholder="Search by Telegram ID, Custom ID, or Name...">
@@ -1178,6 +1190,19 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
     });
 
     loadUsers();
+
+    async function loadCredits() {
+      try {
+        const res = await fetch('/api/admin/credits');
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        document.getElementById('aiCredits').textContent = '$' + data.remaining.toFixed(2);
+        document.getElementById('aiCredits').title = 'Used: $' + data.total_usage.toFixed(2) + ' / Total: $' + data.total_credits.toFixed(2);
+      } catch {
+        document.getElementById('aiCredits').textContent = 'N/A';
+      }
+    }
+    loadCredits();
   </script>
 </body>
 </html>`;

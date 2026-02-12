@@ -11,6 +11,8 @@ services:
       - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
       - WEB_PORT=${WEB_PORT:-3000}
       - WEB_URL=${WEB_URL}
+      - OPENROUTER_MGMT_KEY=${OPENROUTER_MGMT_KEY}
+      - ADMIN_TG_ID=${ADMIN_TG_ID}
     restart: unless-stopped
 
 volumes:

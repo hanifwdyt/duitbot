@@ -1,6 +1,6 @@
 import { Bot, InlineKeyboard, Keyboard } from "grammy";
 import { PrismaClient } from "@prisma/client";
-import { parseExpense, parseReceipt } from "./ai.js";
+import { parseExpense, parseReceipt, getCredits } from "./ai.js";
 import {
   format,
   startOfDay,
@@ -113,6 +113,25 @@ export function createBot(token: string) {
     });
 
     await ctx.reply(`✅ Custom ID ke-set: \`${args}\`\n\nSekarang lo bisa login pake ID ini.`, { parse_mode: "Markdown" });
+  });
+
+  bot.command("credits", async (ctx) => {
+    const tgId = ctx.from?.id.toString();
+    if (!tgId || tgId !== process.env.ADMIN_TG_ID) {
+      await ctx.reply("Access denied.");
+      return;
+    }
+
+    const credits = await getCredits();
+    if (!credits) {
+      await ctx.reply("Gagal fetch credits dari OpenRouter.");
+      return;
+    }
+
+    await ctx.reply(
+      `💳 *OpenRouter Credits*\n\nRemaining: *$${credits.remaining.toFixed(2)}*\nUsed: *$${credits.total_usage.toFixed(2)}*\nTotal: *$${credits.total_credits.toFixed(2)}*`,
+      { parse_mode: "Markdown" }
+    );
   });
 
   bot.command("today", async (ctx) => {
